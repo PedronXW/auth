@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/@shared/either'
-import { Encrypter } from '../../cryptography/encrypter'
-import { HashComparer } from '../../cryptography/hash-comparer'
-import { ClientRepository } from '../../repositories/client-repository'
+import { Encrypter } from '../criptography/encrypter'
+import { HashComparer } from '../criptography/hash-comparer'
 import { WrongCredentialError } from '../errors/WrongCredentialsError'
+import { ClientRepository } from '../repositories/client-repository'
 
 type AuthenticateClientServiceRequest = {
   email: string

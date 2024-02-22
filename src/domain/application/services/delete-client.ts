@@ -1,6 +1,6 @@
 import { Either, left, right } from '@/@shared/either'
-import { ClientRepository } from '../../repositories/client-repository'
 import { ClientNonExistsError } from '../errors/ClientNonExists'
+import { ClientRepository } from '../repositories/client-repository'
 
 type DeleteClientServiceRequest = {
   id: string

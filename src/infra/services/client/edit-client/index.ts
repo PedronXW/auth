@@ -1,9 +1,7 @@
-import { EditClientService } from '@/domain/application/services/client/edit-client'
-import { MongoConnection } from '@/infra/database/mongo-connection'
-import { MongoClientRepository } from '@/infra/database/repositories/MongoClientRepository'
+import { EditClientService } from '@/domain/application/services/edit-client'
+import { DynamoClientRepository } from '@/infra/database/repositories/DynamoClientRepository'
 
-const mongoConnection = new MongoConnection()
-const clientsRepository = new MongoClientRepository(mongoConnection)
+const clientsRepository = new DynamoClientRepository()
 const editClientService = new EditClientService(clientsRepository)
 
 export { editClientService }

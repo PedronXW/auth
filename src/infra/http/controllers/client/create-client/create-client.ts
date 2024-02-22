@@ -1,4 +1,4 @@
-import { CreateClientService } from '@/domain/application/services/client/create-client'
+import { CreateClientService } from '@/domain/application/services/create-client'
 import { ClientPresenter } from '@/infra/http/presenters/presenter-client'
 import { Request, Response } from 'express'
 import { z } from 'zod'

@@ -5,26 +5,32 @@ export class ClientMapper {
   static toDomain(raw): Client {
     return Client.create(
       {
-        name: raw.name,
-        email: raw.email,
-        password: raw.password,
-        status: raw.status,
-        createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt,
+        name: Object.values(raw.name).toString(),
+        email: Object.values(raw.email).toString(),
+        password: Object.values(raw.password).toString(),
+        createdAt: new Date(Object.values(raw.createdAt).toString()),
+        updatedAt: raw.updatedAt
+          ? new Date(Object.values(raw.updatedAt).toString())
+          : null,
       },
-      new EntityId(raw.id),
+      new EntityId(Object.values(raw.id).toString()),
     )
   }
 
   static toPersistence(Client: Client) {
     return {
-      id: Client.id.getValue(),
-      name: Client.name,
-      email: Client.email,
-      status: Client.status,
-      password: Client.password,
-      createdAt: Client.createdAt,
-      updatedAt: Client.updatedAt,
+      id: { S: Client.id.getValue() },
+      name: { S: Client.name },
+      email: { S: Client.email },
+      password: { S: Client.password },
+      createdAt: {
+        S: Client.createdAt?.toString() || new Date().getTime().toString(),
+      },
+      updatedAt: Client.updatedAt
+        ? {
+            S: Client.updatedAt?.toString(),
+          }
+        : { NULL: true },
     }
   }
 }

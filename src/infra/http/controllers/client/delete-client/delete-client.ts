@@ -1,4 +1,4 @@
-import { DeleteClientService } from '@/domain/application/services/client/delete-client'
+import { DeleteClientService } from '@/domain/application/services/delete-client'
 import { Response } from 'express'
 import { z } from 'zod'
 

@@ -11,27 +11,27 @@ type ClientProps = {
 }
 
 export class Client extends Entity<ClientProps> {
-  getName(): string {
+  get name(): string {
     return this.props.name
   }
 
-  setName(name: string): void {
+  set name(name: string) {
     this.props.name = name
   }
 
-  getEmail(): string {
+  get email(): string {
     return this.props.email
   }
 
-  setEmail(email: string): void {
+  set email(email: string) {
     this.props.email = email
   }
 
-  getPassword(): string {
+  get password(): string {
     return this.props.password
   }
 
-  setPassword(password: string): void {
+  set password(password: string) {
     this.props.password = password
   }
 
@@ -39,8 +39,16 @@ export class Client extends Entity<ClientProps> {
     return this.props.createdAt
   }
 
+  set createdAt(createdAt: Date | null) {
+    this.props.createdAt = createdAt
+  }
+
   get updatedAt(): Date | null | undefined {
     return this.props.updatedAt
+  }
+
+  set updatedAt(updatedAt: Date | null | undefined) {
+    this.props.updatedAt = updatedAt
   }
 
   static create(

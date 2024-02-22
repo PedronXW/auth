@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/@shared/either'
 import { Client } from '@/domain/enterprise/entities/client'
-import { HashGenerator } from '../../cryptography/hash-generator'
-import { ClientRepository } from '../../repositories/client-repository'
+import { HashGenerator } from '../criptography/hash-generator'
 import { ClientAlreadyExistsError } from '../errors/ClientAlreadyExistsError'
+import { ClientRepository } from '../repositories/client-repository'
 
 interface CreateClientServiceRequest {
   name: string

@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/@shared/either'
 import { Client } from '@/domain/enterprise/entities/client'
-import { ClientRepository } from '../../repositories/client-repository'
 import { ClientNonExistsError } from '../errors/ClientNonExists'
+import { ClientRepository } from '../repositories/client-repository'
 
 type FetchAllClientsServiceResponse = Either<ClientNonExistsError, Client[]>
 
