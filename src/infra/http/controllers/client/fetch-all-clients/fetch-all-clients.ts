@@ -1,4 +1,4 @@
-import { FetchAllClientsService } from '@/domain/application/services/client/fetch-all-clients'
+import { FetchAllClientsService } from '@/domain/application/services/fetch-all-clients'
 import { ClientPresenter } from '@/infra/http/presenters/presenter-client'
 import { Response } from 'express'
 

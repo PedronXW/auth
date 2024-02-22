@@ -1,6 +1,6 @@
 import { env } from './env'
-import { server } from './socket/socket'
+import { app } from './http/app'
 
-server.listen(env.PORT, () => {
+app.listen(env.PORT, () => {
   console.log(`Server listening on port ${env.PORT}`)
 })

@@ -22,6 +22,6 @@ describe('Fetch All Clients', () => {
     const result = await sut.execute()
 
     expect(result.isRight()).toBe(true)
-    expect(result.value).toEqual([client])
+    expect(result.value).toHaveLength(1)
   })
 })

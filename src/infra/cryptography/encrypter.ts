@@ -1,4 +1,4 @@
-import { Encrypter } from '@/domain/application/cryptography/encrypter'
+import { Encrypter } from '@/domain/application/criptography/encrypter'
 import { sign } from 'jsonwebtoken'
 import { env } from '../env'
 

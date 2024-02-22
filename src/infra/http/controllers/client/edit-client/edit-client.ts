@@ -1,4 +1,4 @@
-import { EditClientService } from '@/domain/application/services/client/edit-client'
+import { EditClientService } from '@/domain/application/services/edit-client'
 import { Response } from 'express'
 import { z } from 'zod'
 

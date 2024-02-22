@@ -1,4 +1,4 @@
-import { FetchClientByIdService } from '@/domain/application/services/client/fetch-client-by-id'
+import { FetchClientByIdService } from '@/domain/application/services/fetch-client-by-id'
 import { ClientPresenter } from '@/infra/http/presenters/presenter-client'
 import { Response } from 'express'
 import { z } from 'zod'

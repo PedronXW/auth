@@ -7,9 +7,12 @@ const envSchema = z.object({
     .enum(['development', 'production', 'test'])
     .default('development'),
   PORT: z.coerce.number().default(3333),
-  MONGO_URL_PRODUCTION: z.string().url(),
-  MONGO_URL_DEVELOPMENT: z.string().url(),
   JWT_SECRET: z.string(),
+  DYNAMODB_TABLE: z.string(),
+  DYNAMODB_ACCESS_KEY: z.string(),
+  DYNAMODB_SECRET_KEY: z.string(),
+  DYNAMODB_REGION: z.string(),
+  DYNAMODB_ENDPOINT: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)

@@ -1,7 +1,5 @@
 import { verify } from 'jsonwebtoken'
 
-import { MongoConnection } from '@/infra/database/mongo-connection'
-import { MongoClientRepository } from '@/infra/database/repositories/MongoClientRepository'
 import { env } from '@/infra/env'
 import { AppError } from '../errors/AppError'
 
@@ -20,7 +18,7 @@ export async function verifyAuthentication(request, response, next) {
 
   try {
     const { sub: id } = verify(token, env.JWT_SECRET) as IPayload
-    const mongoConnection = new MongoConnection()
+    /* const mongoConnection = new MongoConnection()
     const developersRepository = new MongoClientRepository(mongoConnection)
     const user = developersRepository.getClientById(id)
 
@@ -30,7 +28,7 @@ export async function verifyAuthentication(request, response, next) {
 
     request.user = {
       id,
-    }
+    } */
 
     next()
   } catch (error) {

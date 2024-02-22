@@ -21,6 +21,6 @@ describe('CreateClient', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryClientRepository.clients[0].name).toEqual('any_name')
+    expect(inMemoryClientRepository.clients[0].name).toEqual({ S: 'any_name' })
   })
 })

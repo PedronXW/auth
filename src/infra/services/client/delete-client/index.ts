@@ -1,8 +1,6 @@
-import { DeleteClientService } from '@/domain/application/services/client/delete-client'
-import { MongoConnection } from '@/infra/database/mongo-connection'
-import { MongoClientRepository } from '@/infra/database/repositories/MongoClientRepository'
+import { DeleteClientService } from '@/domain/application/services/delete-client'
+import { DynamoClientRepository } from '@/infra/database/repositories/DynamoClientRepository'
 
-const mongoConnection = new MongoConnection()
-const clientRepository = new MongoClientRepository(mongoConnection)
+const clientRepository = new DynamoClientRepository()
 const deleteClientService = new DeleteClientService(clientRepository)
 export { deleteClientService }

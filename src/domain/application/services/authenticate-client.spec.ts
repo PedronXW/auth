@@ -36,7 +36,7 @@ describe('AuthenticateClient', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryClientRepository.clients[0].name).toEqual('any_name')
+    expect(inMemoryClientRepository.clients[0].name).toEqual({ S: 'any_name' })
     expect(result.value).toHaveProperty('token')
   })
 })

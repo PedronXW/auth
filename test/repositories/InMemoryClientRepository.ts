@@ -6,12 +6,12 @@ import { Client } from '@/domain/enterprise/entities/client'
 import { ClientMapper } from '@/infra/database/mappers/client-mapper'
 
 type ClientPersistenceType = {
-  id: string
-  name: string
-  email: string
-  password: string
-  createdAt: Date | null | undefined
-  updatedAt: Date | null | undefined
+  id: Record<string, unknown>
+  name: Record<string, unknown>
+  email: Record<string, unknown>
+  password: Record<string, unknown>
+  createdAt: Record<string, unknown>
+  updatedAt: Record<string, unknown>
 }
 
 export class InMemoryClientRepository implements ClientRepository {
@@ -24,7 +24,7 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async getClientByEmail(email: string): Promise<Client | null> {
-    const client = this.clients.find((c) => c.email === email)
+    const client = this.clients.find((c) => c.email.S === email)
 
     if (!client) return null
 
@@ -32,7 +32,7 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async getClientById(id: string): Promise<Client | null> {
-    const client = this.clients.find((c) => c.id === id)
+    const client = this.clients.find((c) => c.id.S === id)
 
     if (!client) return null
 
@@ -40,7 +40,7 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async deleteClient(id: string): Promise<boolean> {
-    const clientIndex = this.clients.findIndex((c) => c.id === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
 
     this.clients.splice(clientIndex, 1)
 
@@ -48,13 +48,13 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async editClient(id: string, { name, email }: EditClient): Promise<Client> {
-    const clientIndex = this.clients.findIndex((c) => c.id === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
 
     this.clients[clientIndex] = {
       ...this.clients[clientIndex],
-      name,
-      email,
-      updatedAt: new Date(),
+      name: name ? { S: name } : this.clients[clientIndex].name,
+      email: email ? { S: email } : this.clients[clientIndex].email,
+      updatedAt: { S: new Date() },
     }
 
     return ClientMapper.toDomain(this.clients[clientIndex])
@@ -65,11 +65,11 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async changeStatus(id: string): Promise<Client> {
-    const clientIndex = this.clients.findIndex((c) => c.id === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
 
     this.clients[clientIndex] = {
       ...this.clients[clientIndex],
-      updatedAt: new Date(),
+      updatedAt: { S: new Date() },
     }
 
     return ClientMapper.toDomain(this.clients[clientIndex])

@@ -3,7 +3,7 @@ import request from 'supertest'
 
 describe('ClientController (e2e)', () => {
   it('[DELETE] /clients', async () => {
-    const client = await request(app).post('/clients').send({
+    await request(app).post('/clients').send({
       name: 'John Doe',
       email: 'johndoe@johndoe.com',
       password: '12345678',
