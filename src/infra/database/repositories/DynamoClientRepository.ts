@@ -44,6 +44,24 @@ export class DynamoClientRepository implements ClientRepository {
   }
 
   async editClient(id: string, { name, email }: EditClient): Promise<Client> {
+    const expression = {}
+
+    let updateExpression = 'set '
+
+    if (name) {
+      expression['#n'] = 'name'
+      expression[':n'] = { S: name }
+      updateExpression += '#n = :n'
+    }
+
+    if (email) {
+      expression['#e'] = 'email'
+      expression[':e'] = { S: email }
+      updateExpression += ', #e = :e'
+    }
+
+    console.log(expression, id, env.DYNAMODB_TABLE, process.env.COLLECTION_ID)
+
     const client = await dbClient.send(
       new UpdateItemCommand({
         TableName:
@@ -51,14 +69,8 @@ export class DynamoClientRepository implements ClientRepository {
             ? 'teste_' + process.env.COLLECTION_ID
             : env.DYNAMODB_TABLE,
         Key: { id: { S: id } },
-        UpdateExpression: 'set #n = :n, email = :e',
-        ExpressionAttributeNames: {
-          '#n': 'name',
-        },
-        ExpressionAttributeValues: {
-          ':n': { S: name },
-          ':e': { S: email },
-        },
+        UpdateExpression: updateExpression,
+        ExpressionAttributeValues: expression,
       }),
     )
 
@@ -81,7 +93,7 @@ export class DynamoClientRepository implements ClientRepository {
       }),
     )
 
-    if (!client.Items) {
+    if (!client.Items?.length) {
       return null
     }
 

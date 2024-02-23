@@ -3,8 +3,8 @@ import { Response } from 'express'
 import { z } from 'zod'
 
 const editClientZodBodySchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
+  name: z.string().optional(),
+  email: z.string().email().optional(),
 })
 
 export type EditClientBodySchema = z.infer<typeof editClientZodBodySchema>

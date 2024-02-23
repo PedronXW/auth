@@ -1,5 +1,6 @@
 import { verify } from 'jsonwebtoken'
 
+import { DynamoClientRepository } from '@/infra/database/repositories/DynamoClientRepository'
 import { env } from '@/infra/env'
 import { AppError } from '../errors/AppError'
 
@@ -18,9 +19,8 @@ export async function verifyAuthentication(request, response, next) {
 
   try {
     const { sub: id } = verify(token, env.JWT_SECRET) as IPayload
-    /* const mongoConnection = new MongoConnection()
-    const developersRepository = new MongoClientRepository(mongoConnection)
-    const user = developersRepository.getClientById(id)
+    const developersRepository = new DynamoClientRepository()
+    const user = await developersRepository.getClientById(id)
 
     if (!user) {
       throw new AppError('User does not exists', 401)
@@ -28,7 +28,7 @@ export async function verifyAuthentication(request, response, next) {
 
     request.user = {
       id,
-    } */
+    }
 
     next()
   } catch (error) {
