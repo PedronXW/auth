@@ -1,8 +1,8 @@
 import { Client } from '@/domain/enterprise/entities/client'
 
 export type EditClient = {
-  name: string
-  email: string
+  name?: string
+  email?: string
 }
 
 export abstract class ClientRepository {

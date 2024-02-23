@@ -24,7 +24,7 @@ clientsRouter.put('/:id', verifyAuthentication, (req, res) => {
   return editClientController.handle(req, res)
 })
 
-clientsRouter.get('/:id', (req, res) => {
+clientsRouter.get('/:id', verifyAuthentication, (req, res) => {
   return fetchClientByIdController.handle(req, res)
 })
 

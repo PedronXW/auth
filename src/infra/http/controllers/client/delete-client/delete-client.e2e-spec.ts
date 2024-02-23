@@ -14,11 +14,15 @@ describe('ClientController (e2e)', () => {
       password: '12345678',
     })
 
+    console.log(authentication.body)
+
     const response = await request(app)
       .delete(`/clients`)
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${authentication.body.token}`)
       .send()
+
+    console.log(response.body)
 
     expect(response.status).toBe(204)
   })

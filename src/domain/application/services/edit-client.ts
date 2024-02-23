@@ -4,8 +4,8 @@ import { ClientNonExistsError } from '../errors/ClientNonExists'
 import { ClientRepository } from '../repositories/client-repository'
 
 type EditClientServiceRequest = {
-  name: string
-  email: string
+  name?: string
+  email?: string
 }
 
 type EditClientServiceResponse = Either<ClientNonExistsError, Client>
