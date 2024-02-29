@@ -2,7 +2,9 @@
     "moduleFileExtensions": ["js", "json", "ts"],
     "rootDir": ".",
     "testEnvironment": "node",
+    "testTimeout": 180000,
     "testRegex": ".spec.ts$",
+    "preset": "@shelf/jest-dynamodb",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
@@ -10,6 +12,8 @@
       "@/(.*)": "<rootDir>/src/$1",
       "test/(.*)": "<rootDir>/test/$1"
     },
-    "setupFilesAfterEnv": ["./jest-setup.ts"]
+    "setupFilesAfterEnv": [
+      "./jest-setup.ts"
+    ]
   }
   

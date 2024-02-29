@@ -11,6 +11,8 @@ describe('AppController (e2e)', () => {
 
     const { id } = response.body
 
+    jest.setTimeout(20000)
+
     const authentication = await request(app).post('/sessions').send({
       email: 'johndoe@johndoe.com',
       password: '12345678',
