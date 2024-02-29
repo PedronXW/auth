@@ -18,10 +18,7 @@ export class DynamoClientRepository implements ClientRepository {
   async createClient(client: Client): Promise<Client> {
     await dbClient.send(
       new PutItemCommand({
-        TableName:
-          env.NODE_ENV === 'test'
-            ? 'teste_' + process.env.COLLECTION_ID
-            : env.DYNAMODB_TABLE,
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
         Item: { ...ClientMapper.toPersistence(client) },
       }),
     )
@@ -32,10 +29,7 @@ export class DynamoClientRepository implements ClientRepository {
   async deleteClient(id: string): Promise<boolean> {
     const deleteResult = await dbClient.send(
       new DeleteItemCommand({
-        TableName:
-          env.NODE_ENV === 'test'
-            ? 'teste_' + process.env.COLLECTION_ID
-            : env.DYNAMODB_TABLE,
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
         Key: { id: { S: id } },
       }),
     )
@@ -46,31 +40,34 @@ export class DynamoClientRepository implements ClientRepository {
   async editClient(id: string, { name, email }: EditClient): Promise<Client> {
     const expression = {}
 
-    let updateExpression = 'set '
+    let updateExpression = 'SET '
+
+    const expressionAttributeNames = {}
 
     if (name) {
-      expression['#n'] = 'name'
+      expressionAttributeNames['#n'] = 'name'
       expression[':n'] = { S: name }
       updateExpression += '#n = :n'
     }
 
-    if (email) {
-      expression['#e'] = 'email'
-      expression[':e'] = { S: email }
-      updateExpression += ', #e = :e'
+    if (name && email) {
+      updateExpression += ','
     }
 
-    console.log(expression, id, env.DYNAMODB_TABLE, process.env.COLLECTION_ID)
+    if (email) {
+      expressionAttributeNames['#e'] = 'email'
+      expression[':e'] = { S: email }
+      updateExpression += ' #e = :e'
+    }
 
     const client = await dbClient.send(
       new UpdateItemCommand({
-        TableName:
-          env.NODE_ENV === 'test'
-            ? 'teste_' + process.env.COLLECTION_ID
-            : env.DYNAMODB_TABLE,
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
         Key: { id: { S: id } },
         UpdateExpression: updateExpression,
         ExpressionAttributeValues: expression,
+        ExpressionAttributeNames: expressionAttributeNames,
+        ReturnValues: 'ALL_NEW',
       }),
     )
 
@@ -80,10 +77,7 @@ export class DynamoClientRepository implements ClientRepository {
   async getClientByEmail(email: string): Promise<Client | null> {
     const client = await dbClient.send(
       new QueryCommand({
-        TableName:
-          env.NODE_ENV === 'test'
-            ? 'teste_' + process.env.COLLECTION_ID
-            : env.DYNAMODB_TABLE,
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
         IndexName: 'email-index',
         KeyConditionExpression: 'email = :email',
         ExpressionAttributeValues: {
@@ -103,10 +97,7 @@ export class DynamoClientRepository implements ClientRepository {
   async getClientById(id: string): Promise<Client | null> {
     const client = await dbClient.send(
       new QueryCommand({
-        TableName:
-          env.NODE_ENV === 'test'
-            ? 'teste_' + process.env.COLLECTION_ID
-            : env.DYNAMODB_TABLE,
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
         KeyConditionExpression: 'id = :id',
         ExpressionAttributeValues: {
           ':id': { S: id },
@@ -125,10 +116,7 @@ export class DynamoClientRepository implements ClientRepository {
   async getAllClients(): Promise<Client[]> {
     const clients = await dbClient.send(
       new ScanCommand({
-        TableName:
-          env.NODE_ENV === 'test'
-            ? 'teste_' + process.env.COLLECTION_ID
-            : env.DYNAMODB_TABLE,
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
       }),
     )
 

@@ -1,12 +1,22 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { env } from '../env'
-
+/*
+environment === 'test'
+    ? {
+        region: env.DYNAMODB_REGION,
+        endpoint: env.DYNAMODB_ENDPOINT,
+        credentials: {
+          accessKeyId: env.DYNAMODB_ACCESS_KEY,
+          secretAccessKey: env.DYNAMODB_SECRET_KEY,
+        },
+      }
+    : 
+*/
 const dbClient = new DynamoDBClient({
-  region: env.DYNAMODB_REGION,
-  endpoint: env.DYNAMODB_ENDPOINT,
+  region: 'local',
+  endpoint: 'http://dynamodb-local:8000',
   credentials: {
-    accessKeyId: env.DYNAMODB_ACCESS_KEY,
-    secretAccessKey: env.DYNAMODB_SECRET_KEY,
+    accessKeyId: 'accessKeyId',
+    secretAccessKey: 'secretAccessKey',
   },
 })
 
