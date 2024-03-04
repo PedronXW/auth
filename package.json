@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config ./jest.config.json  --runInBand",
+    "test-unit": "jest --config ./jest.config.json  --runInBand",
+    "test-e2e":"jest --config ./jest-e2e.config.json  --runInBand",
     "test:watch": "jest --watchAll",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",

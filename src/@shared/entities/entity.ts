@@ -19,10 +19,6 @@ export abstract class Entity<Props> {
       return false
     }
 
-    if (!(entity instanceof this.constructor)) {
-      return false
-    }
-
     if (entity === this) {
       return true
     }
