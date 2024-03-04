@@ -16,6 +16,5 @@ test('success result', () => {
 
 test('error result', () => {
   const errorResult = doSomething(false)
-
   expect(errorResult.isLeft()).toEqual(true)
 })
