@@ -1,6 +1,7 @@
 import { Entity } from '../../../@shared/entities/entity'
 import { EntityId } from '../../../@shared/entities/entity-id'
 import { Optional } from '../../../@shared/types/optional'
+import { CreateClientEvent } from '../events/CreateClientEvent'
 
 type ClientProps = {
   name: string
@@ -62,6 +63,11 @@ export class Client extends Entity<ClientProps> {
       },
       id,
     )
+
+    if (!id) {
+      client.addDomainEvent(new CreateClientEvent(client))
+    }
+
     return client
   }
 }
