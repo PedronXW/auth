@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/@shared/events/event-dispatcher'
 import {
   ClientRepository,
   EditClient,
@@ -22,6 +23,10 @@ export class DynamoClientRepository implements ClientRepository {
         Item: { ...ClientMapper.toPersistence(client) },
       }),
     )
+
+    DomainEvents.markAggregateForDispatch(client)
+
+    DomainEvents.dispatchEventsForAggregate(client.id)
 
     return client
   }

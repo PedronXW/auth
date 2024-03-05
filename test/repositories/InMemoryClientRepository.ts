@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/@shared/events/event-dispatcher'
 import {
   ClientRepository,
   EditClient,
@@ -19,6 +20,10 @@ export class InMemoryClientRepository implements ClientRepository {
 
   async createClient(client: Client): Promise<Client> {
     this.clients.push(ClientMapper.toPersistence(client))
+
+    DomainEvents.markAggregateForDispatch(client)
+
+    DomainEvents.dispatchEventsForAggregate(client.id)
 
     return client
   }
