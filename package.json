@@ -9,7 +9,6 @@
     "test:watch": "jest --watchAll",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./jest-e2e.json",
     "start:dev": "tsx watch src/infra/server.ts",
     "start": "node build/infra/server.js",
     "build": "tsup src --out-dir build"
