@@ -9,6 +9,13 @@ jobs:
             matrix:
                 node-version: [19.x]
         runs-on: ubuntu-latest
+        env:
+          NODE_ENV: test
+          DYNAMODB_TABLE: Users
+          DYNAMODB_ACCESS_KEY: 
+          DYNAMODB_SECRET_KEY: 
+          DYNAMODB_REGION: local
+          DYNAMODB_ENDPOINT: http://localhost:8000
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
