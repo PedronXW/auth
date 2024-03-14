@@ -11,6 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
           NODE_ENV: test
+          JWT_SECRET: mysecret
           DYNAMODB_TABLE: Users
           DYNAMODB_ACCESS_KEY: 
           DYNAMODB_SECRET_KEY: 
