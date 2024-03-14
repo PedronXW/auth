@@ -1,3 +1,4 @@
+import { RabbitMQModule } from '@/infra/rabbitmq/rabbitmqModule'
 import { makeClient } from 'test/factories/client-factory'
 import { InMemoryClientRepository } from 'test/repositories/InMemoryClientRepository'
 import { OnClientCreated } from './on-client-created'
@@ -10,7 +11,7 @@ describe('On Answer Created', () => {
   })
 
   it('should  send a notification when an answer is created', async () => {
-    const _onAnswerCreated = new OnClientCreated()
+    const _onAnswerCreated = new OnClientCreated(new RabbitMQModule())
 
     const client = makeClient()
 
