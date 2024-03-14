@@ -2,10 +2,11 @@ import { DomainEvents } from '@/@shared/events/event-dispatcher'
 import { EventHandler } from '@/@shared/events/event-handler'
 import { CreateClientEvent } from '@/domain/enterprise/events/CreateClientEvent'
 import { env } from '@/infra/env'
-import { RabbitMQProducer } from '@/infra/rabbitmq/producer'
+import { RabbitMQOptions } from '@/infra/rabbitmq/rabbitmqModule'
+import { Broker } from '../brokers/broker'
 
 export class OnClientCreated implements EventHandler {
-  constructor() {
+  constructor(private rabbitProducer: Broker<RabbitMQOptions>) {
     this.setupSubscriptions()
   }
 
@@ -20,9 +21,15 @@ export class OnClientCreated implements EventHandler {
     if (env.NODE_ENV === 'test') {
       console.log(`New client created: ${client.name}`)
     } else {
-      const rabbitProducer = new RabbitMQProducer('amqp://rabbitmq')
-      await rabbitProducer.connect()
-      rabbitProducer.send('teste', JSON.stringify(client))
+      await this.rabbitProducer.connect('amqp://rabbitmq')
+      await this.rabbitProducer.send(
+        {
+          queue: 'client-created',
+          exchange: 'client',
+          exchangeType: 'fanout',
+        },
+        JSON.stringify(client),
+      )
     }
   }
 }
