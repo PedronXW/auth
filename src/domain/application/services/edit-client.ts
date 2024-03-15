@@ -24,7 +24,6 @@ export class EditClientService {
     }
 
     const updatedClient = await this.clientRepository.editClient(id, {
-      ...client,
       name,
       email,
     })
