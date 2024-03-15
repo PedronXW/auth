@@ -28,6 +28,18 @@ export class InMemoryClientRepository implements ClientRepository {
     return client
   }
 
+  async changePassword(id: string, password: string): Promise<Client> {
+    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
+
+    this.clients[clientIndex] = {
+      ...this.clients[clientIndex],
+      password: { S: password },
+      updatedAt: { S: new Date() },
+    }
+
+    return ClientMapper.toDomain(this.clients[clientIndex])
+  }
+
   async getClientByEmail(email: string): Promise<Client | null> {
     const client = this.clients.find((c) => c.email.S === email)
 

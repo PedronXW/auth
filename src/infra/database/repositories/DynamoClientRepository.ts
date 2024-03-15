@@ -31,6 +31,25 @@ export class DynamoClientRepository implements ClientRepository {
     return client
   }
 
+  async changePassword(id: string, password: string): Promise<Client> {
+    const client = await dbClient.send(
+      new UpdateItemCommand({
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
+        Key: { id: { S: id } },
+        UpdateExpression: 'SET #p = :p',
+        ExpressionAttributeValues: {
+          ':p': { S: password },
+        },
+        ExpressionAttributeNames: {
+          '#p': 'password',
+        },
+        ReturnValues: 'ALL_NEW',
+      }),
+    )
+
+    return ClientMapper.toDomain(client.Attributes)
+  }
+
   async deleteClient(id: string): Promise<boolean> {
     const deleteResult = await dbClient.send(
       new DeleteItemCommand({

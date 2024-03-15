@@ -8,6 +8,8 @@ export type EditClient = {
 export abstract class ClientRepository {
   abstract createClient(client: Client): Promise<Client>
 
+  abstract changePassword(id: string, password: string): Promise<Client>
+
   abstract deleteClient(id: string): Promise<boolean>
 
   abstract editClient(id: string, client: EditClient): Promise<Client>
