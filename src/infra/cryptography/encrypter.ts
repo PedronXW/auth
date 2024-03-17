@@ -1,12 +1,25 @@
-import { Encrypter } from '@/domain/application/criptography/encrypter'
-import { sign } from 'jsonwebtoken'
+import { Encrypter as EncryptInterface } from '@/domain/application/criptography/encrypter'
+import { sign, verify } from 'jsonwebtoken'
 import { env } from '../env'
 
-export class JwtEncrypter implements Encrypter {
-  async encrypt(payload: Record<string, unknown>): Promise<string> {
-    return sign({}, env.JWT_SECRET, {
+type IPayload = { sub: string }
+
+export class Encrypter implements EncryptInterface {
+  async encrypt(
+    payload: Record<string, unknown>,
+    factor: string = env.JWT_SECRET,
+  ): Promise<string> {
+    return sign({}, factor, {
       subject: payload.id as string,
       expiresIn: '1d',
     })
+  }
+
+  async decrypt(
+    token: string,
+    factor: string = env.JWT_SECRET,
+  ): Promise<string> {
+    const { sub } = verify(token, factor) as IPayload
+    return sub
   }
 }

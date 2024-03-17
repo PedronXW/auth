@@ -1,4 +1,5 @@
 import { EditClientService } from '@/domain/application/services/edit-client'
+import { ClientPresenter } from '@/infra/http/presenters/presenter-client'
 import { Response } from 'express'
 import { z } from 'zod'
 
@@ -30,6 +31,6 @@ export class EditClientController {
       return res.status(404).send({ error: editedClient.value.message })
     }
 
-    return res.status(201).send({ client: editedClient.value })
+    return res.status(201).send(ClientPresenter.toHTTP(editedClient.value))
   }
 }

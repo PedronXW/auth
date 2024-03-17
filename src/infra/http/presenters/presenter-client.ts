@@ -6,6 +6,7 @@ export class ClientPresenter {
       id: client.id.getValue(),
       name: client.name,
       email: client.email,
+      emailVerified: client.emailVerified,
       createdAt: client.createdAt,
       updatedAt: client.updatedAt,
     }

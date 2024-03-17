@@ -6,6 +6,7 @@ export function makeClient(override: Partial<Client> = {}, id?: EntityId) {
     {
       name: 'any_name',
       email: 'any_email',
+      emailVerified: false,
       password: 'any_password',
       createdAt: new Date(),
       ...override,

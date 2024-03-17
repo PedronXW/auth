@@ -1,4 +1,5 @@
 import { ChangePasswordService } from '@/domain/application/services/change-password'
+import { ClientPresenter } from '@/infra/http/presenters/presenter-client'
 import { Response } from 'express'
 import { z } from 'zod'
 
@@ -35,6 +36,6 @@ export class ChangePasswordController {
       return res.status(404).send({ error: editedClient.value.message })
     }
 
-    return res.status(201).send({ client: editedClient.value })
+    return res.status(201).send(ClientPresenter.toHTTP(editedClient.value))
   }
 }

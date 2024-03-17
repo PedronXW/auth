@@ -61,6 +61,25 @@ export class DynamoClientRepository implements ClientRepository {
     return !!deleteResult
   }
 
+  async verifyClientEmail(id: string): Promise<Client> {
+    const client = await dbClient.send(
+      new UpdateItemCommand({
+        TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
+        Key: { id: { S: id } },
+        UpdateExpression: 'SET #e = :e',
+        ExpressionAttributeValues: {
+          ':e': { BOOL: true },
+        },
+        ExpressionAttributeNames: {
+          '#e': 'emailVerified',
+        },
+        ReturnValues: 'ALL_NEW',
+      }),
+    )
+
+    return ClientMapper.toDomain(client.Attributes)
+  }
+
   async editClient(id: string, { name, email }: EditClient): Promise<Client> {
     const expression = {}
 

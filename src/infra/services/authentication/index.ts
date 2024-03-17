@@ -1,16 +1,16 @@
 import { AuthenticateClientService } from '@/domain/application/services/authenticate-client'
 import { Crypto } from '@/infra/cryptography/crypto'
-import { JwtEncrypter } from '@/infra/cryptography/encrypter'
+import { Encrypter } from '@/infra/cryptography/encrypter'
 import { DynamoClientRepository } from '@/infra/database/repositories/DynamoClientRepository'
 
-const jwtEncrypter = new JwtEncrypter()
+const encrypter = new Encrypter()
 const hashComparer = new Crypto()
 const clientRepository = new DynamoClientRepository()
 
 const authenticateDeveloperService = new AuthenticateClientService(
   clientRepository,
   hashComparer,
-  jwtEncrypter,
+  encrypter,
 )
 
 export { authenticateDeveloperService }
