@@ -7,6 +7,7 @@ export class ClientMapper {
       {
         name: Object.values(raw.name).toString(),
         email: Object.values(raw.email).toString(),
+        emailVerified: Object.values(raw.emailVerified).toString() === 'true',
         password: Object.values(raw.password).toString(),
         createdAt: new Date(Object.values(raw.createdAt).toString()),
         updatedAt: raw.updatedAt
@@ -22,6 +23,7 @@ export class ClientMapper {
       id: { S: Client.id.getValue() },
       name: { S: Client.name },
       email: { S: Client.email },
+      emailVerified: { BOOL: Client.emailVerified },
       password: { S: Client.password },
       createdAt: {
         S: Client.createdAt?.toString() || new Date().getTime().toString(),

@@ -1,27 +1,26 @@
 import { Crypto } from '@/infra/cryptography/crypto'
 import { Encrypter } from '@/infra/cryptography/encrypter'
+import { env } from '@/infra/env'
 import { makeClient } from 'test/factories/client-factory'
 import { InMemoryClientRepository } from 'test/repositories/InMemoryClientRepository'
-import { AuthenticateClientService } from './authenticate-client'
+import { SendVerificationClientEmailService } from './send-verification-client-email'
 
-let sut: AuthenticateClientService
+let sut: SendVerificationClientEmailService
 let inMemoryClientRepository: InMemoryClientRepository
 let crypto: Crypto
 let encrypter: Encrypter
-
-describe('AuthenticateClient', () => {
+describe('SendVerificationClientEmail', () => {
   beforeAll(() => {
-    inMemoryClientRepository = new InMemoryClientRepository()
     crypto = new Crypto()
     encrypter = new Encrypter()
-    sut = new AuthenticateClientService(
+    inMemoryClientRepository = new InMemoryClientRepository()
+    sut = new SendVerificationClientEmailService(
       inMemoryClientRepository,
-      crypto,
       encrypter,
     )
   })
 
-  it('should be able to authenticate a client', async () => {
+  it('should be able to verify a client email', async () => {
     const client = makeClient({
       name: 'any_name',
       email: 'any_email@gmail.com',
@@ -30,13 +29,14 @@ describe('AuthenticateClient', () => {
 
     await inMemoryClientRepository.createClient(client)
 
-    const result = await sut.execute({
-      email: 'any_email@gmail.com',
-      password: 'any_password',
-    })
+    const result = await sut.execute({ id: client.id.getValue() })
+
+    const encryptedId = await encrypter.decrypt(
+      result.value as string,
+      env.VERIFY_EMAIL_SECRET,
+    )
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryClientRepository.clients[0].name).toEqual({ S: 'any_name' })
-    expect(result.value).toHaveProperty('token')
+    expect(encryptedId).toEqual(client.id.getValue())
   })
 })

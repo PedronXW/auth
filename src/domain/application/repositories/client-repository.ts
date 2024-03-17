@@ -19,4 +19,6 @@ export abstract class ClientRepository {
   abstract getClientById(id: string): Promise<Client | null>
 
   abstract getAllClients(): Promise<Client[]>
+
+  abstract verifyClientEmail(id: string): Promise<Client>
 }

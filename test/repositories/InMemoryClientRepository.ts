@@ -10,6 +10,7 @@ type ClientPersistenceType = {
   id: Record<string, unknown>
   name: Record<string, unknown>
   email: Record<string, unknown>
+  emailVerified: Record<string, unknown>
   password: Record<string, unknown>
   createdAt: Record<string, unknown>
   updatedAt: Record<string, unknown>
@@ -34,6 +35,18 @@ export class InMemoryClientRepository implements ClientRepository {
     this.clients[clientIndex] = {
       ...this.clients[clientIndex],
       password: { S: password },
+      updatedAt: { S: new Date() },
+    }
+
+    return ClientMapper.toDomain(this.clients[clientIndex])
+  }
+
+  async verifyClientEmail(id: string): Promise<Client> {
+    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
+
+    this.clients[clientIndex] = {
+      ...this.clients[clientIndex],
+      emailVerified: { BOOL: true },
       updatedAt: { S: new Date() },
     }
 

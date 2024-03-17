@@ -8,6 +8,7 @@ const envSchema = z.object({
     .default('development'),
   PORT: z.coerce.number().default(3333),
   JWT_SECRET: z.string(),
+  VERIFY_EMAIL_SECRET: z.string(),
   DYNAMODB_TABLE: z.string(),
   DYNAMODB_ACCESS_KEY: z.string(),
   DYNAMODB_SECRET_KEY: z.string(),

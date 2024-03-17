@@ -9,7 +9,7 @@ const authenticateClientZodSchema = z.object({
 export class AuthenticateClientController {
   constructor(private authenticateClientService: AuthenticateClientService) {}
 
-  async handle(req, res): Promise<any> {
+  async handle(req, res): Promise<Response> {
     const { email, password } = authenticateClientZodSchema.parse(req.body)
 
     const token = await this.authenticateClientService.execute({

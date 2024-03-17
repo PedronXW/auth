@@ -6,6 +6,7 @@ import { CreateClientEvent } from '../events/CreateClientEvent'
 type ClientProps = {
   name: string
   email: string
+  emailVerified: boolean
   password: string
   createdAt: Date | null
   updatedAt?: Date | null
@@ -26,6 +27,14 @@ export class Client extends Entity<ClientProps> {
 
   set email(email: string) {
     this.props.email = email
+  }
+
+  get emailVerified(): boolean {
+    return this.props.emailVerified
+  }
+
+  set emailVerified(emailVerified: boolean) {
+    this.props.emailVerified = emailVerified
   }
 
   get password(): string {
@@ -53,13 +62,14 @@ export class Client extends Entity<ClientProps> {
   }
 
   static create(
-    props: Optional<ClientProps, 'createdAt'>,
+    props: Optional<ClientProps, 'createdAt' | 'emailVerified'>,
     id?: EntityId,
   ): Client {
     const client = new Client(
       {
         ...props,
         createdAt: new Date(),
+        emailVerified: false,
       },
       id,
     )
