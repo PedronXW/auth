@@ -38,6 +38,10 @@ export async function verifyAuthentication(request, response, next) {
 
     next()
   } catch (error) {
-    throw new AppError('Invalid token', 401)
+    if (error instanceof ClientEmailNotVerifiedError) {
+      throw new AppError('Client e-mail not verified', 401)
+    } else {
+      throw new AppError('Invalid token', 401)
+    }
   }
 }
