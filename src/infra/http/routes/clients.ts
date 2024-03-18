@@ -8,6 +8,7 @@ import { fetchClientByIdController } from '../controllers/client/fetch-client-by
 import { sendVerificationClientEmailController } from '../controllers/client/send-verification-client-email'
 import { verifyClientEmailController } from '../controllers/client/verify-client-email'
 import { verifyAuthentication } from '../middlewares/verifyAuthentication'
+import { verifyUserExistence } from '../middlewares/verifyUserExistence'
 
 const clientsRouter = Router()
 
@@ -19,7 +20,7 @@ clientsRouter.put('/verify', (req, res) => {
   return verifyClientEmailController.handle(req, res)
 })
 
-clientsRouter.get('/verify', verifyAuthentication, (req, res) => {
+clientsRouter.get('/verify', verifyUserExistence, (req, res) => {
   return sendVerificationClientEmailController.handle(req, res)
 })
 

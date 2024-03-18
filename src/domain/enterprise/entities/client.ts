@@ -68,8 +68,8 @@ export class Client extends Entity<ClientProps> {
     const client = new Client(
       {
         ...props,
+        emailVerified: props.emailVerified || false,
         createdAt: new Date(),
-        emailVerified: false,
       },
       id,
     )

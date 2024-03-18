@@ -25,6 +25,7 @@ describe('AuthenticateClient', () => {
     const client = makeClient({
       name: 'any_name',
       email: 'any_email@gmail.com',
+      emailVerified: true,
       password: await crypto.hash('any_password'),
     })
 
