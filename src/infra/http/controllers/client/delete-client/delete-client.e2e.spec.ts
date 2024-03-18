@@ -20,6 +20,16 @@ describe('ClientController (e2e)', () => {
       password: '12345678',
     })
 
+    const verifyCode = await request(app)
+      .get('/clients/verify')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${authentication.body.token}`)
+      .send()
+
+    await request(app).put('/clients/verify').send({
+      id: verifyCode.body.validatorCode,
+    })
+
     const response = await request(app)
       .delete(`/clients`)
       .set('Content-Type', 'application/json')

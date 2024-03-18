@@ -1,6 +1,5 @@
 import { verify } from 'jsonwebtoken'
 
-import { ClientEmailNotVerifiedError } from '@/domain/application/errors/ClientEmailNotVerifiedError'
 import { ClientNonExistsError } from '@/domain/application/errors/ClientNonExists'
 import { DynamoClientRepository } from '@/infra/database/repositories/DynamoClientRepository'
 import { env } from '@/infra/env'
@@ -10,7 +9,7 @@ interface IPayload {
   sub: string
 }
 
-export async function verifyAuthentication(request, response, next) {
+export async function verifyUserExistence(request, response, next) {
   const authHeader = request.headers.authorization
 
   if (!authHeader) {
@@ -26,10 +25,6 @@ export async function verifyAuthentication(request, response, next) {
 
     if (!user) {
       throw new ClientNonExistsError()
-    }
-
-    if (!user.emailVerified) {
-      throw new ClientEmailNotVerifiedError()
     }
 
     request.user = {
