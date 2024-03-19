@@ -23,6 +23,6 @@ export class ResetClientPasswordController {
       return res.status(404).send({ error: code.value.message })
     }
 
-    return res.status(200).send({ validatorCode: code.value })
+    return res.status(200).send()
   }
 }
