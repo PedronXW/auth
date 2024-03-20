@@ -12,6 +12,6 @@ RUN npm install --force
 
 COPY . .
 
-EXPOSE 3333
+CMD ["npm", "run", "start:dev"]
 
-CMD ["npm", "run", "dev"]
+EXPOSE 3333
