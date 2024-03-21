@@ -12,6 +12,8 @@ RUN npm install --force
 
 COPY . .
 
+RUN npm run build
+
 EXPOSE 3333
 
-CMD ["npm", "run", "dev"]
+CMD [ "node", "build/infra/server.js" ]

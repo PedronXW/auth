@@ -13,6 +13,7 @@ jobs:
           NODE_ENV: test
           JWT_SECRET: mysecret
           VERIFY_EMAIL_SECRET: verifyemail
+          RESET_PASSWORD_SECRET: resetpassword
           DYNAMODB_TABLE: Users
           DYNAMODB_ACCESS_KEY: 
           DYNAMODB_SECRET_KEY: 
