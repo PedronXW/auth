@@ -13,7 +13,7 @@ services:
 
 
   auth:
-    image: pedronx/auth
+    build: .
     depends_on:
      - "dynamodb-local"
     links:

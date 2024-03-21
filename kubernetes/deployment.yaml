@@ -19,11 +19,11 @@ spec:
           image: "pedronx/auth"
           resources:
             requests:
-              memory: 20Mi
-              cpu: "0.3"
+              memory: 1000Mi
+              cpu: "2"
             limits:
-              memory: 25Mi
-              cpu: "0.3"
+              memory: 1000Mi
+              cpu: "2"
           startupProbe:
             httpGet:
               path: /healthz
@@ -45,6 +45,3 @@ spec:
             timeoutSeconds: 1
             successThreshold: 1
             periodSeconds: 5
-          envFrom:
-            - configMapRef:
-                name: auth-env
