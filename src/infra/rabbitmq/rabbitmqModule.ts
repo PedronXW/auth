@@ -33,7 +33,6 @@ export class RabbitMQModule implements Broker<RabbitMQOptions> {
   public async connect(url: string) {
     this.connection = await amqp.connect(url)
     this.channel = await this.connection.createChannel()
-    this.channel.prefetch(1)
   }
 
   public async send(
@@ -46,13 +45,10 @@ export class RabbitMQModule implements Broker<RabbitMQOptions> {
   }
 
   public async consume(
-    { exchange, queue, exchangeType, routingKey = '' }: RabbitMQOptions,
+    { queue }: RabbitMQOptions,
     callback: (msg: amqp.ConsumeMessage | null) => void,
   ) {
-    await this.setExchange(exchange, exchangeType)
-    await this.setQueue(queue)
-    await this.bind(queue, exchange, routingKey)
-
-    await this.channel!.consume(queue, callback, { noAck: true })
+    await this.channel!.prefetch(1)
+    await this.channel!.consume(queue, callback, { noAck: false })
   }
 }

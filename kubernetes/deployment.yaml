@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: auth
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -19,10 +19,10 @@ spec:
           image: "pedronx/auth"
           resources:
             requests:
-              memory: 1000Mi
+              memory: 1.5Gi
               cpu: "2"
             limits:
-              memory: 1000Mi
+              memory: 1.5Gi
               cpu: "2"
           startupProbe:
             httpGet:
