@@ -1,3 +1,5 @@
+#Arquivo encontrada na documentação do rabbitmq
+
 apiVersion: v1
 kind: Namespace
 metadata:

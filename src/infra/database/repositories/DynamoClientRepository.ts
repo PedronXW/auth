@@ -28,6 +28,8 @@ export class DynamoClientRepository implements ClientRepository {
 
     DomainEvents.dispatchEventsForAggregate(client.id)
 
+    console.log('Client created')
+
     return client
   }
 
