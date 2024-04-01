@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { app } from '../../app'
+import { app } from '../../../app'
 
 describe('AppController (e2e)', () => {
   it('[POST] /sessions', async () => {

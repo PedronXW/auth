@@ -15,22 +15,23 @@ describe('AppController (e2e)', () => {
     })
 
     const verifyCode = await request(app)
-      .get('/clients/verify')
+      .get('/sessions/verify')
+      .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${auth.body.token}`)
       .send()
 
-    await request(app).put('/clients/verify').send({
+    await request(app).put('/sessions/verify').send({
       id: verifyCode.body.validatorCode,
     })
 
     const getResetPassword = await request(app)
-      .post('/clients/reset-password')
+      .post('/sessions/reset-password')
       .set('Authorization', `Bearer ${auth.body.token}`)
       .send({
         email: 'johndoe@johndoe.com',
       })
 
-    const response = await request(app).put('/clients/reset-password').send({
+    const response = await request(app).put('/sessions/reset-password').send({
       id: getResetPassword.body.validatorCode,
       newPassword: '123456789',
     })

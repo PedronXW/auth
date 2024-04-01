@@ -1,8 +1,6 @@
 import { verify } from 'jsonwebtoken'
 
 import { ClientEmailNotVerifiedError } from '@/domain/application/errors/ClientEmailNotVerifiedError'
-import { ClientNonExistsError } from '@/domain/application/errors/ClientNonExists'
-import { DynamoClientRepository } from '@/infra/database/repositories/DynamoClientRepository'
 import { env } from '@/infra/env'
 import { AppError } from '../errors/AppError'
 
@@ -21,16 +19,6 @@ export async function verifyAuthentication(request, response, next) {
 
   try {
     const { sub: id } = verify(token, env.JWT_SECRET) as IPayload
-    const developersRepository = new DynamoClientRepository()
-    const user = await developersRepository.getClientById(id)
-
-    if (!user) {
-      throw new ClientNonExistsError()
-    }
-
-    if (!user.emailVerified) {
-      throw new ClientEmailNotVerifiedError()
-    }
 
     request.user = {
       id,
