@@ -26,15 +26,11 @@ services:
     volumes:
       - .:/usr/app
 
-  rabbitmq:
-      image: rabbitmq:latest
-      container_name: rabbitmq
+  rabbitmq-cluster:
+      image: pedronx/rabbitmq
+      container_name: rabbitmq-cluster
       ports: 
         - 25672:25672
         - 15672:15672
-      volumes:
-        - /docker_conf/rabbitmq/data/:/var/lib/rabbitmq/
-      environment:
-        - RABBITMQ_DEFAULT_USER = admin
-        - RABBITMQ_DEFAULT_PASS = passw123
+        - 5672:5672
       restart: always
