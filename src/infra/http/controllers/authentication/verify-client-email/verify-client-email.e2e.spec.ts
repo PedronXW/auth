@@ -15,12 +15,12 @@ describe('AppController (e2e)', () => {
     })
 
     const verifyCode = await request(app)
-      .get('/clients/verify')
+      .get('/sessions/verify')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${auth.body.token}`)
       .send()
 
-    const response = await request(app).put('/clients/verify').send({
+    const response = await request(app).put('/sessions/verify').send({
       id: verifyCode.body.validatorCode,
     })
 
