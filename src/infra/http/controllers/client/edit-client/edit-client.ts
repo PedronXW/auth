@@ -28,9 +28,9 @@ export class EditClientController {
     })
 
     if (editedClient.isLeft()) {
-      return res.status(404).send({ error: editedClient.value.message })
+      return res.status(400).send({ error: editedClient.value.message })
     }
 
-    return res.status(201).send(ClientPresenter.toHTTP(editedClient.value))
+    return res.status(200).send(ClientPresenter.toHTTP(editedClient.value))
   }
 }

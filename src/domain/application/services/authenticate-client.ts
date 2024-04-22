@@ -28,7 +28,7 @@ export class AuthenticateClientService {
     const client = await this.clientRepository.getClientByEmail(email)
 
     if (!client) {
-      return left(new Error('Client not found'))
+      return left(new WrongCredentialError())
     }
 
     const passwordMatch = await this.hashComparer.compare(
@@ -37,7 +37,7 @@ export class AuthenticateClientService {
     )
 
     if (!passwordMatch) {
-      return left(new Error('Password does not match'))
+      return left(new WrongCredentialError())
     }
 
     const token = await this.encrypter.encrypt({

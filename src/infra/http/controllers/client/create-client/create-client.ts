@@ -22,7 +22,7 @@ export class CreateClientController {
     })
 
     if (client.isLeft()) {
-      return res.status(401).json({ error: client.value.message })
+      return res.status(400).json({ error: client.value.message })
     }
 
     return res.status(201).json(ClientPresenter.toHTTP(client.value))

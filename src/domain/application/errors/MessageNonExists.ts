@@ -1,4 +1,4 @@
-import { ServiceError } from '@/@shared/errors/use-case-error'
+import { ServiceError } from '@/@shared/errors/service-error'
 
 export class MessageNonExistsError extends Error implements ServiceError {
   constructor() {

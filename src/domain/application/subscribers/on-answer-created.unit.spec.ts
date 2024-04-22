@@ -11,7 +11,7 @@ describe('On Answer Created', () => {
   })
 
   it('should  send a notification when an answer is created', async () => {
-    const _onAnswerCreated = new OnClientCreated(new RabbitMQModule())
+    new OnClientCreated(new RabbitMQModule())
 
     const client = makeClient()
 

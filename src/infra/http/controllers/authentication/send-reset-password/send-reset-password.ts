@@ -16,7 +16,7 @@ export class SendResetPasswordController {
     const code = await this.sendResetPasswordService.execute({ email })
 
     if (code.isLeft()) {
-      return res.status(404).send({ error: code.value.message })
+      return res.status(400).send({ error: code.value.message })
     }
 
     return res.status(200).send({ validatorCode: code.value })

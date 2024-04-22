@@ -11,7 +11,7 @@ export class FetchAllClientsController {
     const clients = await this.fetchAllClientsService.execute()
 
     if (clients.isLeft()) {
-      return res.status(404).send({ error: clients.value.message })
+      return res.status(400).send({ error: clients.value.message })
     }
 
     return res
