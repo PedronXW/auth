@@ -20,7 +20,7 @@ export class EditClientService {
     const client = await this.clientRepository.getClientById(id)
 
     if (!client) {
-      return left(new Error('Client not found'))
+      return left(new ClientNonExistsError())
     }
 
     const updatedClient = await this.clientRepository.editClient(id, {

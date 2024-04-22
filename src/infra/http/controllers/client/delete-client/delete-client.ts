@@ -15,7 +15,7 @@ export class DeleteClientController {
     const client = await this.deleteClientService.execute({ id })
 
     if (client.isLeft()) {
-      return res.status(401).json({ error: client.value.message })
+      return res.status(400).json({ error: client.value.message })
     }
 
     return res.status(204).json()

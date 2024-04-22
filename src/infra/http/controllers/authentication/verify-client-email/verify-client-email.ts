@@ -17,7 +17,7 @@ export class VerifyClientEmailController {
     const client = await this.verifyClientEmailService.execute({ id })
 
     if (client.isLeft()) {
-      return res.status(404).send({ error: client.value.message })
+      return res.status(400).send({ error: client.value.message })
     }
 
     return res
