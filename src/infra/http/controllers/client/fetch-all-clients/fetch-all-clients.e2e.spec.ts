@@ -1,7 +1,7 @@
 import { app } from '@/infra/http/app'
 import request from 'supertest'
 
-describe('AppController (e2e)', () => {
+describe('', () => {
   it('[GET] /clients', async () => {
     await request(app).post('/clients').send({
       name: 'John Doe',
@@ -29,7 +29,9 @@ describe('AppController (e2e)', () => {
     const fetchResponse = await request(app)
       .get(`/clients`)
       .set('Content-Type', 'application/json')
+      .query({ page: 1, limit: 10 })
       .set('Authorization', `Bearer ${authentication.body.token}`)
+      .send()
 
     expect(fetchResponse.status).toBe(200)
     expect(fetchResponse.body.clients).toHaveLength(1)

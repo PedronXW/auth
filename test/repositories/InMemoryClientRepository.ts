@@ -74,7 +74,11 @@ export class InMemoryClientRepository implements ClientRepository {
     return this.clients[clientIndex]
   }
 
-  async getAllClients(): Promise<Client[]> {
-    return this.clients.map((c) => ClientMapper.toDomain(c))
+  async getAllClients(page: number, limit: number): Promise<Client[]> {
+    const startIndex = (page - 1) * limit
+
+    const endIndex = page * limit
+
+    return this.clients.slice(startIndex, endIndex)
   }
 }
