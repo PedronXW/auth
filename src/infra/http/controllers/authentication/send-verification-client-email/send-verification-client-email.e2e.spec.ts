@@ -1,8 +1,8 @@
 import { app } from '@/infra/http/app'
 import request from 'supertest'
 
-describe('AppController (e2e)', () => {
-  it('[POST] /sessions', async () => {
+describe('Send Verification Client Email', () => {
+  it('should be able to send a verification client email', async () => {
     await request(app).post('/clients').send({
       name: 'John Doe',
       email: 'johndoe@johndoe.com',
@@ -19,10 +19,6 @@ describe('AppController (e2e)', () => {
       .set('Authorization', `Bearer ${auth.body.token}`)
       .send()
 
-    const response = await request(app).put('/sessions/verify').send({
-      id: verifyCode.body.validatorCode,
-    })
-
-    expect(response.status).toBe(200)
+    expect(verifyCode.status).toBe(200)
   })
 })
