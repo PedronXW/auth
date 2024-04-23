@@ -3,6 +3,7 @@ import { Client } from '@/domain/enterprise/entities/client'
 import { HashComparer } from '../criptography/hash-comparer'
 import { HashGenerator } from '../criptography/hash-generator'
 import { ClientNonExistsError } from '../errors/ClientNonExists'
+import { WrongCredentialError } from '../errors/WrongCredentialsError'
 import { ClientRepository } from '../repositories/client-repository'
 
 type ChangePasswordServiceResponse = Either<ClientNonExistsError, Client>
@@ -31,7 +32,7 @@ export class ChangePasswordService {
     )
 
     if (!passwordMatch) {
-      return left(new ClientNonExistsError())
+      return left(new WrongCredentialError())
     }
 
     const editResult = await this.clientRepository.changePassword(

@@ -7,7 +7,7 @@ let inMemoryClientRepository: InMemoryClientRepository
 let crypto: Crypto
 
 describe('CreateClient', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     inMemoryClientRepository = new InMemoryClientRepository()
     crypto = new Crypto()
     sut = new CreateClientService(inMemoryClientRepository, crypto)

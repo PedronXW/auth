@@ -158,10 +158,13 @@ export class DynamoClientRepository implements ClientRepository {
     return ClientMapper.toDomain(client.Items[0])
   }
 
-  async getAllClients(): Promise<Client[]> {
+  async getAllClients(page: number, limit: number): Promise<Client[]> {
     const clients = await dbClient.send(
       new ScanCommand({
         TableName: env.NODE_ENV === 'test' ? 'teste' : env.DYNAMODB_TABLE,
+        Limit: limit,
+        ExclusiveStartKey:
+          page > 1 ? { id: { S: page.toString() } } : undefined,
       }),
     )
 

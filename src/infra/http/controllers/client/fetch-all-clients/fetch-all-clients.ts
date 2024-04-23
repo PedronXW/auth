@@ -1,6 +1,12 @@
 import { FetchAllClientsService } from '@/domain/application/services/fetch-all-clients'
 import { ClientPresenter } from '@/infra/http/presenters/presenter-client'
 import { Response } from 'express'
+import { z } from 'zod'
+
+const paginationZodSchema = z.object({
+  page: z.string().transform(Number),
+  limit: z.string().transform(Number),
+})
 
 export class FetchAllClientsController {
   constructor(
@@ -8,7 +14,9 @@ export class FetchAllClientsController {
   ) {}
 
   async handle(req, res): Promise<Response> {
-    const clients = await this.fetchAllClientsService.execute()
+    const { page, limit } = paginationZodSchema.parse(req.query)
+
+    const clients = await this.fetchAllClientsService.execute(page, limit)
 
     if (clients.isLeft()) {
       return res.status(400).send({ error: clients.value.message })
