@@ -33,7 +33,7 @@ describe('ChangePassword', () => {
     expect(
       await crypto.compare(
         'new_password',
-        Object.values(inMemoryClientRepository.clients[0].password).toString(),
+        inMemoryClientRepository.clients[0].password.toString(),
       ),
     ).toBe(true)
   })

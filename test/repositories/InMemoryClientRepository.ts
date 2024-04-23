@@ -6,21 +6,11 @@ import {
 import { Client } from '@/domain/enterprise/entities/client'
 import { ClientMapper } from '@/infra/database/mappers/client-mapper'
 
-type ClientPersistenceType = {
-  id: Record<string, unknown>
-  name: Record<string, unknown>
-  email: Record<string, unknown>
-  emailVerified: Record<string, unknown>
-  password: Record<string, unknown>
-  createdAt: Record<string, unknown>
-  updatedAt: Record<string, unknown>
-}
-
 export class InMemoryClientRepository implements ClientRepository {
-  clients: ClientPersistenceType[] = []
+  clients: Client[] = []
 
   async createClient(client: Client): Promise<Client> {
-    this.clients.push(ClientMapper.toPersistence(client))
+    this.clients.push(client)
 
     DomainEvents.markAggregateForDispatch(client)
 
@@ -30,47 +20,41 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async changePassword(id: string, password: string): Promise<Client> {
-    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.getValue() === id)
 
-    this.clients[clientIndex] = {
-      ...this.clients[clientIndex],
-      password: { S: password },
-      updatedAt: { S: new Date() },
-    }
+    this.clients[clientIndex].password = password
+    this.clients[clientIndex].updatedAt = new Date()
 
     return ClientMapper.toDomain(this.clients[clientIndex])
   }
 
   async verifyClientEmail(id: string): Promise<Client> {
-    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.getValue() === id)
 
-    this.clients[clientIndex] = {
-      ...this.clients[clientIndex],
-      emailVerified: { BOOL: true },
-      updatedAt: { S: new Date() },
-    }
+    this.clients[clientIndex].emailVerified = true
+    this.clients[clientIndex].updatedAt = new Date()
 
-    return ClientMapper.toDomain(this.clients[clientIndex])
+    return this.clients[clientIndex]
   }
 
   async getClientByEmail(email: string): Promise<Client | null> {
-    const client = this.clients.find((c) => c.email.S === email)
+    const client = this.clients.find((c) => c.email === email)
 
     if (!client) return null
 
-    return ClientMapper.toDomain(client)
+    return client
   }
 
   async getClientById(id: string): Promise<Client | null> {
-    const client = this.clients.find((c) => c.id.S === id)
+    const client = this.clients.find((c) => c.id.getValue() === id)
 
     if (!client) return null
 
-    return ClientMapper.toDomain(client)
+    return client
   }
 
   async deleteClient(id: string): Promise<boolean> {
-    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.getValue() === id)
 
     this.clients.splice(clientIndex, 1)
 
@@ -78,30 +62,19 @@ export class InMemoryClientRepository implements ClientRepository {
   }
 
   async editClient(id: string, { name, email }: EditClient): Promise<Client> {
-    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
+    const clientIndex = this.clients.findIndex((c) => c.id.getValue() === id)
 
-    this.clients[clientIndex] = {
-      ...this.clients[clientIndex],
-      name: name ? { S: name } : this.clients[clientIndex].name,
-      email: email ? { S: email } : this.clients[clientIndex].email,
-      updatedAt: { S: new Date() },
-    }
+    if (clientIndex === -1) throw new Error('Client not found')
 
-    return ClientMapper.toDomain(this.clients[clientIndex])
+    this.clients[clientIndex].updatedAt = new Date()
+
+    if (name) this.clients[clientIndex].name = name
+    if (email) this.clients[clientIndex].email = email
+
+    return this.clients[clientIndex]
   }
 
   async getAllClients(): Promise<Client[]> {
     return this.clients.map((c) => ClientMapper.toDomain(c))
-  }
-
-  async changeStatus(id: string): Promise<Client> {
-    const clientIndex = this.clients.findIndex((c) => c.id.S === id)
-
-    this.clients[clientIndex] = {
-      ...this.clients[clientIndex],
-      updatedAt: { S: new Date() },
-    }
-
-    return ClientMapper.toDomain(this.clients[clientIndex])
   }
 }

@@ -33,6 +33,6 @@ describe('AppController (e2e)', () => {
         newPassword: '123456789',
       })
 
-    expect(responseUpdate.status).toBe(201)
+    expect(responseUpdate.status).toBe(200)
   })
 })

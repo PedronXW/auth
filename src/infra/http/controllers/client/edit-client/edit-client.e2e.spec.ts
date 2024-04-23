@@ -35,6 +35,6 @@ describe('AppController (e2e)', () => {
         email: 'arroze@johndoe.com',
       })
 
-    expect(responseUpdate.status).toBe(201)
+    expect(responseUpdate.status).toBe(200)
   })
 })
