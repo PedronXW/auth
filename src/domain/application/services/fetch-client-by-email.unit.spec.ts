@@ -22,6 +22,6 @@ describe('Fetch Client By Email', () => {
     const result = await sut.execute({ email: client.email })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryClientRepository.clients[0].name).toEqual({ S: 'any_name' })
+    expect(inMemoryClientRepository.clients[0].name).toEqual('any_name')
   })
 })

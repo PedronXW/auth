@@ -34,9 +34,7 @@ describe('VerifyClientEmail', () => {
     const result = await sut.execute({ id })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryClientRepository.clients[0].name).toEqual({ S: 'any_name' })
-    expect(inMemoryClientRepository.clients[0].emailVerified).toEqual({
-      BOOL: true,
-    })
+    expect(inMemoryClientRepository.clients[0].name).toEqual('any_name')
+    expect(inMemoryClientRepository.clients[0].emailVerified).toEqual(true)
   })
 })
