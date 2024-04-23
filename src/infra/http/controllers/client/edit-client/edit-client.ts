@@ -4,7 +4,7 @@ import { Response } from 'express'
 import { z } from 'zod'
 
 const editClientZodBodySchema = z.object({
-  name: z.string().optional(),
+  name: z.string().min(2).optional(),
   email: z.string().email().optional(),
 })
 

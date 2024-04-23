@@ -1,12 +1,12 @@
 import { app } from '@/infra/http/app'
 import request from 'supertest'
 
-describe('ClientController (e2e)', () => {
+describe('Delete Client', () => {
   beforeEach(async () => {
     jest.setTimeout(30000)
   })
 
-  it('[DELETE] /clients', async () => {
+  it('should be able to delete a client', async () => {
     await request(app).post('/clients').send({
       name: 'John Doe',
       email: 'johndoe@johndoe.com',
