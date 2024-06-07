@@ -1,6 +1,6 @@
 # Auth
 
-Projeto voltado para estudo e integração de funcionalidades estudadas.
+Projeto voltado para estudo
 
 A intenção é implementar um sistema de autenticação completo utilizando práticas de SOLID, Clean Architecture, TDD e alguns princípios de estruturação de DDD.
 
