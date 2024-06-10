@@ -9,12 +9,23 @@ jobs:
             matrix:
                 node-version: [19.x]
         runs-on: ubuntu-latest
+        env:
+          NODE_ENV: test
+          JWT_SECRET: mysecret
+          VERIFY_EMAIL_SECRET: verifyemail
+          RESET_PASSWORD_SECRET: resetpassword
+          DYNAMODB_TABLE: Users
+          DYNAMODB_ACCESS_KEY: 
+          DYNAMODB_SECRET_KEY: 
+          DYNAMODB_REGION: local
+          DYNAMODB_ENDPOINT: http://localhost:8000
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
               with:
                 node-version: ${{ matrix.node-version }}
-            - run: npm run test
+            - run: npm install
+            - run: npm run test-unit
             - run: npm run build
 
             - name: Set up QEMU

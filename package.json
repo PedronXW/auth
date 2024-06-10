@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "tsx watch src/server.ts",
-    "start": "node build/server.js",
+    "test-unit": "jest --config ./jest.config.json  --runInBand",
+    "test-e2e":"jest --config ./jest-e2e.config.json  --runInBand",
+    "test:watch": "jest --watchAll",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "start:dev": "tsx watch src/infra/server.ts",
+    "start": "node build/infra/server.js",
     "build": "tsup src --out-dir build"
   },
   "keywords": [],
@@ -14,8 +18,11 @@
   "license": "ISC",
   "devDependencies": {
     "@rocketseat/eslint-config": "2.2.2",
+    "@shelf/jest-dynamodb": "3.4.4",
+    "@types/amqplib": "0.10.5",
     "@types/express": "4.17.21",
     "@types/jest": "29.5.12",
+    "@types/jsonwebtoken": "9.0.5",
     "@types/node": "20.11.19",
     "@types/supertest": "6.0.2",
     "eslint": "8.56.0",
@@ -28,5 +35,16 @@
     "tsup": "8.0.2",
     "tsx": "4.7.1",
     "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.515.0",
+    "@types/bcryptjs": "2.4.6",
+    "amqplib": "0.10.3",
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.5",
+    "dotenv": "16.4.4",
+    "jsonwebtoken": "9.0.2",
+    "kafkajs": "2.2.4",
+    "zod": "3.22.4"
   }
 }
