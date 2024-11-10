@@ -21,9 +21,8 @@ export class OnClientCreated implements EventHandler {
     if (env.NODE_ENV === 'test') {
       console.log(`New client created: ${client.name}`)
     } else {
-      await this.rabbitProducer.connect(
-        'amqp://guest:guest@rabbitmq-cluster:5672/',
-      )
+      await this.rabbitProducer.connect(env.RABBIT_MQ_LINK)
+      console.log('Sending message to client-created queue')
       await this.rabbitProducer.send(
         {
           queue: 'client-created',

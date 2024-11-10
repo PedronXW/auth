@@ -1,6 +1,8 @@
 FROM node:19-slim
 
-WORKDIR /usr/app
+USER root
+
+WORKDIR /app
 
 COPY package.json ./
 
@@ -16,4 +18,4 @@ RUN npm run build
 
 EXPOSE 3333
 
-CMD [ "node", "build/infra/server.js" ]
+CMD [ "npm run", "start:dev" ]
