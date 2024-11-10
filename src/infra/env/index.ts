@@ -15,6 +15,7 @@ const envSchema = z.object({
   DYNAMODB_SECRET_KEY: z.string(),
   DYNAMODB_REGION: z.string(),
   DYNAMODB_ENDPOINT: z.string(),
+  RABBIT_MQ_LINK: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
